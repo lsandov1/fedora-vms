@@ -1,4 +1,6 @@
-all:
+all: create
+
+create:
 	./create_vm.sh $(virtname) $(location) $(os_variant)
 
 console:
