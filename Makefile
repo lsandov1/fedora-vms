@@ -3,7 +3,7 @@ include defaults.inc
 all: create
 
 create:
-	./create_vm.sh $(virtname) $(location) $(os_variant) $(boot) $(serial)
+	./create_vm.sh $(virtname) $(location) $(os_variant) $(serial) $(secure_boot)
 
 console:
 	"$(virsh)" console $(virtname)
