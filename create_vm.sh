@@ -2,17 +2,20 @@
 
 set -x
 
-virtname=$1
-location=$2
-os_variant=$3
+virtname="$1"
+location="$2"
+os_variant="$3"
+boot="$4"
+serial="$5"
 
+# dependencies
 sudo dnf install -y qemu-kvm libvirt virt-install policycoreutils-python-utils
 
+# systemctl stuff
 sudo systemctl start libvirtd
-
 sudo systemctl disable firewalld
 
-
+# logging setup
 log_dir=/var/tmp/logs$((1 + $RANDOM))
 if [ ! -d $log_dir ]; then
     mkdir -p $log_dir
@@ -22,17 +25,24 @@ if [ ! -d $log_dir ]; then
     sudo restorecon $log_dir
 fi
 
+# everything different than pty will be sent to a file
+serial="--serial pty 2> $log_dir/qemu_err_output.log"
+if [ "$serial" != "pty"]; then
+    serial="--serial file,path=${log_dir}/${virtname}_console_output.log"
+fi
+
 wd=`pwd`
 
+# creation
 sudo virt-install \
      --os-variant $os_variant \
      --name $virtname \
      --memory 4096 \
      --vcpus 2 \
      --disk size=10 \
-     --boot loader=/usr/share/edk2/ovmf/OVMF_CODE.secboot.fd,loader_ro=yes,loader_type=pflash,nvram_template=/usr/share/edk2/ovmf/OVMF_VARS.fd,loader_secure=no,bootmenu.enable=on,bios.useserial=on --features smm.state=on --machine q35 \
+     $(boot) \
      --noautoconsole --graphics none \
-     --serial pty 2> $log_dir/qemu_err_output.log \
+     $(serial) \
      --initrd-inject=${wd}/install.ks \
      --extra-args "console=ttyS0 inst.ks=file:/install.ks" \
      --location=${location}

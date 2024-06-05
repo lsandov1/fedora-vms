@@ -1,7 +1,9 @@
+include defaults.inc
+
 all: create
 
 create:
-	./create_vm.sh $(virtname) $(location) $(os_variant)
+	./create_vm.sh $(virtname) $(location) $(os_variant) $(boot) $(serial)
 
 console:
 	sudo virsh console $(virtname)
@@ -9,6 +11,8 @@ console:
 start:
 	sudo virsh start $(virtname) --console
 
+ip:
+	virsh domifaddr $(virtname)
 
 destroy:
 	sudo virsh destroy $(virtname)
