@@ -6,18 +6,21 @@ create:
 	./create_vm.sh $(virtname) $(location) $(os_variant) $(boot) $(serial)
 
 console:
-	sudo virsh console $(virtname)
+	"$(virsh)" console $(virtname)
+
+list:
+	"$(virsh)" list --all
 
 start:
-	sudo virsh start $(virtname) --console
+	"$(virsh)" start $(virtname) --console
 
 ip:
-	virsh domifaddr $(virtname)
+	@./getip $(virtname)
 
 destroy:
-	sudo virsh destroy $(virtname)
+	"$(virsh)" destroy $(virtname)
 
 undefine:
-	sudo virsh undefine --nvram --remove-all-storage $(virtname)
+	"$(virsh)" undefine --nvram --remove-all-storage $(virtname)
 
 clean: destroy undefine

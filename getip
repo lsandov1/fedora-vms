@@ -1,0 +1,6 @@
+#! /usr/bin/bash
+
+virtname="$1"
+ip=$(sudo virsh domifaddr $virtname | grep 192 | awk '{print $4}' | awk -F'/' '{print $1}')
+
+echo $ip
