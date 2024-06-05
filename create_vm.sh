@@ -27,7 +27,7 @@ fi
 
 # by default, use pty
 if [ -z "$serial" -o "$serial" == "pty" ]; then
-    serial="--serial pty 2> $log_dir/qemu_err_output.log"
+    serial="--serial pty"
 else
     serial="--serial file,path=${log_dir}/${virtname}_console_output.log"
 fi
