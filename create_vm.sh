@@ -2,12 +2,6 @@
 
 set -x
 
-virtname="$1"
-location="$2"
-os_variant="$3"
-serial="$4"
-secure_boot="$5"
-
 # dependencies
 sudo dnf install -y qemu-kvm libvirt virt-install policycoreutils-python-utils
 
@@ -18,8 +12,8 @@ sudo systemctl disable firewalld
 # logging setup
 log_dir=/var/tmp/logs$((1 + $RANDOM))
 if [ ! -d $log_dir ]; then
-    mkdir -p $log_dir
-    chmod +rx $log_dir
+    sudo mkdir -p $log_dir
+    sudo chmod +rx $log_dir
     # Use appropriate SELinux context for the log files
     sudo semanage fcontext -a -t virt_log_t "$log_dir(/.*)?"
     sudo restorecon $log_dir
@@ -51,8 +45,8 @@ sudo virt-install \
      $boot \
      --noautoconsole --graphics none \
      $serial \
-     --initrd-inject=${wd}/install.ks \
-     --extra-args "console=ttyS0 inst.ks=file:/install.ks" \
+     --initrd-inject=${wd}/${ks_file} \
+     --extra-args "console=ttyS0 inst.ks=file:/${ks_file}" \
      --location=${location}
 
 if [[ -s $log_dir/qemu_err_output.log ]]; then

@@ -1,7 +1,13 @@
-secure_boot ?= "no"
+# exports
+virtname ?=
+location ?=
+os_variant ?=
+secure_boot ?= "no" # options: yes or no
+serial ?= "pty" # options: pty or file
+ks_file= ?= "install.ks" # any ks file located in root dir
 
-# Options: pty or file
-# if file, no pty will be available
-serial ?= "pty"
+export virtname location os_variant serial secure_boot ks_file
 
+
+# wrappers
 virsh="sudo virsh"
