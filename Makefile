@@ -17,6 +17,13 @@ start:
 ip:
 	@./getip $(virtname)
 
+attach-device:
+	sudo dd if=/dev/zero of=/var/lib/libvirt/images/vdc.img bs=1M seek=1096 count=0
+	sudo virsh attach-device $(virtname) vdc.xml
+
+detach-device:
+	sudo virsh detach-device $(virtname) vdc.xml
+
 destroy:
 	"$(virsh)" destroy $(virtname)
 
