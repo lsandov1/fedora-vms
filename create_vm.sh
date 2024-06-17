@@ -12,8 +12,8 @@ sudo systemctl disable firewalld
 # logging setup
 log_dir=/var/tmp/logs$((1 + $RANDOM))
 if [ ! -d $log_dir ]; then
-    sudo mkdir -p $log_dir
-    sudo chmod +rx $log_dir
+    mkdir -p $log_dir
+    chmod +rx $log_dir
     # Use appropriate SELinux context for the log files
     sudo semanage fcontext -a -t virt_log_t "$log_dir(/.*)?"
     sudo restorecon $log_dir
@@ -57,4 +57,4 @@ fi
 
 echo -e '\nplease wait for the installation to finish.'
 
-echo -e "\nconnect: sudo virsh console $virtname"
+echo -e "\nconnect: virsh console $virtname"
