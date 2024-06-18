@@ -31,8 +31,6 @@ if [ -z "$boot" -o "$boot" == "no_sb" ]; then
     boot="--boot loader=/usr/share/edk2/ovmf/OVMF_CODE.secboot.fd,loader_ro=yes,loader_type=pflash,nvram_template=/usr/share/edk2/ovmf/OVMF_VARS.fd,loader_secure=no,bootmenu.enable=on,bios.useserial=on --features smm.state=on --machine q35"
 elif [ "$boot" == "sb" ]; then
     boot="--boot uefi"
-elif [ "$boot" == "bios" ]; then
-    boot="--boot bios"
 else
     boot=
 fi
