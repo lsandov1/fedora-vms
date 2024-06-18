@@ -6,5 +6,5 @@ include Makefile
 virtname=f39-nmbl-no-sb
 location=https://dl.fedoraproject.org/pub/fedora/linux/releases/39/Server/x86_64/os/
 os_variant=fedora39
-secure_boot=no
+boot=no_sb
 serial=file
