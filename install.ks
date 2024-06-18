@@ -6,6 +6,10 @@ rootpw rhel
 
 %packages
 @core
+git
+git-core
+make
+wget
 %end
 
 user --name guest --password rhel --groups wheel
