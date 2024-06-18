@@ -29,8 +29,10 @@ fi
 # by default, disable secure_boot
 if [ -z "$secure_boot" -o "$secure_boot" == "no" ]; then
     boot="--boot loader=/usr/share/edk2/ovmf/OVMF_CODE.secboot.fd,loader_ro=yes,loader_type=pflash,nvram_template=/usr/share/edk2/ovmf/OVMF_VARS.fd,loader_secure=no,bootmenu.enable=on,bios.useserial=on --features smm.state=on --machine q35"
-else
+elif [ "$secure_boot" == "yes" ]; then
     boot="--boot uefi"
+else
+    boot=
 fi
 
 wd=`pwd`
