@@ -1,0 +1,4 @@
+#!/usr/bin/bash
+
+# 11G disks = 1024*11 = 10240
+sudo dd if=/dev/zero of=/var/lib/libvirt/images/$device_name.img bs=1M count=11264 status=progress

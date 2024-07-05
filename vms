@@ -1,0 +1,13 @@
+#!/usr/bin/bash
+
+if [[ "$1" == "destroy" ]]; then
+for d in $(sudo virsh list --all | grep 'running' | awk '{print $2}'); do
+    sudo virsh destroy $d
+done
+fi
+
+if [[ "$1" == "undefine" ]]; then
+    for d in $(sudo virsh list --all | grep 'shut off' | awk '{print $2}'); do
+        sudo virsh undefine --nvram --remove-all-storage $d
+    done
+fi

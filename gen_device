@@ -1,0 +1,12 @@
+#!/usr/bin/bash
+
+xml=${device_name}.xml
+img=${device_name}.img
+
+cat > $xml << EOF
+<disk type='file' device='disk'>
+   <driver name='qemu' type='raw' cache='none'/>
+   <source file='/var/lib/libvirt/images/$img'/>
+   <target dev='vdb'/>
+</disk>
+EOF
