@@ -6,3 +6,4 @@ os_variant=fedora-rawhide
 boot=no_sb
 serial=pty
 ks_file=install_lvm.ks
+device_name=rawhide-lvm-a

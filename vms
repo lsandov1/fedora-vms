@@ -1,5 +1,19 @@
 #!/usr/bin/bash
 
+set -e
+
+if [[ "$1" == "list" ]]; then
+    sudo virsh list --all
+fi
+
+if [[ "$1" == "ips" ]]; then
+    for d in $(sudo virsh list --all | grep 'running' | awk '{print $2}'); do
+        echo $d
+        echo '------'
+        sudo virsh domifaddr --full $d
+done
+fi
+
 if [[ "$1" == "destroy" ]]; then
 for d in $(sudo virsh list --all | grep 'running' | awk '{print $2}'); do
     sudo virsh destroy $d

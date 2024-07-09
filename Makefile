@@ -1,6 +1,9 @@
 include defaults.inc
 
-all: create
+all: none
+
+none:
+	@echo provide a target
 
 create:
 	./create_vm.sh
@@ -18,16 +21,23 @@ ip:
 	@./getip $(virtname)
 
 attach-device:
-	sudo dd if=/dev/zero of=/var/lib/libvirt/images/vdc.img bs=1M seek=1096 count=0
-	sudo virsh attach-device $(virtname) vdc.xml
+	./gen_disk
+	./gen_device
+	sudo virsh attach-device --config $(virtname) $(device_name).xml
 
 detach-device:
-	sudo virsh detach-device $(virtname) vdc.xml
+	sudo virsh detach-device --config $(virtname) $(device_name).xml
 
 destroy:
 	"$(virsh)" destroy $(virtname)
 
+destroy-all:
+	./vms destroy
+
 undefine:
 	"$(virsh)" undefine --nvram --remove-all-storage $(virtname)
+
+undefine-all:
+	./vms undefine
 
 clean: destroy undefine

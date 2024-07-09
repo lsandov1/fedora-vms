@@ -1,13 +1,17 @@
-# exports
+# required
 virtname ?=
 location ?=
 os_variant ?=
-boot ?= "no_sb" # options: yes or no
-serial ?= "pty" # options: pty or file
-ks_file= ?= "install.ks" # any ks file located in root dir
 
-export virtname location os_variant serial boot ks_file
+# optional
+boot ?= no_sb # secure boot options: no_sb or sb
+serial ?= pty # serial options: pty or file
+lvm ?= no # LVM options: yes or no
+device_name ?= vdx
 
+# export for shell consumption
+export virtname location os_variant boot serial lvm device_name
 
 # wrappers
+# NONE without 'sudo' VMs got into another subnet, 10.* instead of 192.*
 virsh="sudo virsh"
