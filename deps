@@ -1,0 +1,4 @@
+#!/usr/bin/bash
+
+# dependencies
+sudo dnf install -y qemu-kvm libvirt virt-install policycoreutils-python-utils
